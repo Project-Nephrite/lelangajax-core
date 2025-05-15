@@ -17,5 +17,3 @@ We currently haven't manage to accept contribution as this is a team project, bu
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Ananda Risyad via [ananda.risyad@binus.ac.id](mailto:ananda.risyad@binus.ac.id). All security vulnerabilities will be promptly addressed.
-
-=
