@@ -72,7 +72,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger("schema_id");
             $table->unsignedBigInteger("seller_id");
-            $table->unsignedBigInteger("category_id");
+            $table->unsignedBigInteger("category_id")->nullable();
 
             $table->string("bucket_url");
 
@@ -87,15 +87,17 @@ return new class extends Migration
             $table->foreign("category_id")->references('id')
                 ->on('categories')
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->onDelete("set null")
+            ;
         });
 
 
         Schema::create("disputes", function (Blueprint $table) {
             $table->id();
             $table->string("status", 10);
-            $table->timestamp("opened_at");
-            $table->timestamp("closed_at");
+            $table->timestamps();
+            $table->timestamp("opened_at")->useCurrent();
+            $table->timestamp("closed_at")->nullable();
             $table->unsignedBigInteger("issuer_id");
             $table->unsignedBigInteger("moderator_id");
             $table->unsignedBigInteger("listing_id");
