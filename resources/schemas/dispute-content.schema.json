@@ -1,0 +1,26 @@
+{
+    "$id": "http://example.com/schemas/dispute-content.schema.json#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "title": { "type": "string" },
+        "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+        },
+        "complaint": { "type": "string" },
+        "evidence": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "testifier": { "type": "string" },
+                    "message": { "type": "string" },
+                    "media": { "type": "array", "items": { "type": "string" } }
+                }
+            },
+            "default": []
+        }
+    },
+    "required": ["title", "priority", "complaint"]
+}
