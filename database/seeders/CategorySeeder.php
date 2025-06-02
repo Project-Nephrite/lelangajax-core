@@ -24,7 +24,7 @@ class CategorySeeder extends Seeder
                 "name" => "TCG Cards",
                 "description" => "Collection of TCG cards, generic and limited editions"
             ]);
-        DB::table("cateogries")
+        DB::table("categories")
             ->insert([
                 "name" => "Daily Goods",
                 "description" => "Items for daily use that worth bid for"

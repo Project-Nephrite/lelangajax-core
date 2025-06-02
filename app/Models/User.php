@@ -32,7 +32,8 @@ class User extends Authenticatable
         'birth_of_date',
         'home_address',
         'ktp_url',
-        'verification_key'
+        'verification_key',
+        'remember_token'
     ];
 
     /**
