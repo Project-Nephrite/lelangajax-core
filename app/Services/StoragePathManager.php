@@ -30,6 +30,11 @@ class StoragePathManager
     }
 
 
+    public function listingPath(string $filename = null): string
+    {
+        return $this->userPath("listing", $filename);
+    }
+
     public function userKtpPath(string $filename = null): string
     {
         return $this->userPath('document', $filename);
