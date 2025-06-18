@@ -11,7 +11,7 @@ class CategoryPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class CategoryPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name"          =>  "string|min:4",
+            "description"   =>  "string|min:12|max:64",
+            "image"         =>  "file"
         ];
     }
 }

@@ -24,6 +24,11 @@ class StoragePathManager
         return $path;
     }
 
+    protected function internalPath(string $type, string $filename = null): string
+    {
+        return $this->makePath('internal_contents', $type, $filename);
+    }
+
     protected function userPath(string $type, string $filename = null): string
     {
         return $this->makePath("user_contents", $type, $filename);
@@ -43,5 +48,10 @@ class StoragePathManager
     public function userPicturePath(string $filename = null): string
     {
         return $this->userPath('picture', $filename);
+    }
+
+    public function internalCategoryPath(string $filename = null): string
+    {
+        return  $this->internalPath("category", $filename);
     }
 }

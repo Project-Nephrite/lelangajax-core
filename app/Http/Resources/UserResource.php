@@ -26,16 +26,4 @@ class UserResource extends BaseResource
             'birth_of_date' =>  $this->birth_of_date,
         ];
     }
-
-    /**
-     * Return as response
-     */
-    public function withResponse(Request $request, JsonResponse $response)
-    {
-        $response->setData([
-            'status'    =>  true,
-            'message'   =>  'user retrieval success',
-            'data'      =>  $request->getPayload()
-        ]);
-    }
 }

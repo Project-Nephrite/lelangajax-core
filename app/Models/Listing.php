@@ -23,7 +23,7 @@ class Listing extends Model
         "status",
         "bucket_url",
         "category_id",
-        "user_id",
+        "seller_id",
         "schema_id"
     ];
 

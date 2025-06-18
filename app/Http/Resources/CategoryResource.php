@@ -19,19 +19,8 @@ class CategoryResource extends BaseResource
 
             'id'            =>  $this->id,
             "name"          =>  $this->name,
-            "description"   =>  $this->description
+            "description"   =>  $this->description,
+            'image_url'     =>  $this->image_url
         ];
-    }
-
-    /**
-     * Return as response
-     */
-    public function withResponse(Request $request, JsonResponse $response)
-    {
-        $response->setData([
-            'status'    =>  true,
-            'message'   =>  'user retrieval success',
-            'data'      =>  $request->getPayload()
-        ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\StoragePathManager;
+use App\Services\StorageService;
 use App\Shared\Storage\Filepaths\StorageFilepath;
 use App\Shared\storage\Filepaths;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class AuthController extends Controller
     /**
      * Register a new user
      */
-    public function register(Request $request, StoragePathManager $path)
+    public function register(Request $request, StoragePathManager $path, StorageService $storage)
     {
         $validated = $request->validate([
             'username'      =>  'required|string|unique:users|max:255',
@@ -35,19 +36,11 @@ class AuthController extends Controller
             'verification_key'  => 'string'
         ]);
 
-        $ktp = $request->file('ktp');
-        $pathKtp = $path->userKtpPath() . uniqid() . '_' . $ktp->getClientOriginalName();
-        Storage::disk('azure')->put(
-            $pathKtp,
-            file_get_contents($ktp)
+        $pathProfile = $storage->upload(
+            $path->userPicturePath(),
+            $request->file('profile')
         );
-
-        $profile = $request->file('profile');
-        $pathProfile = $path->userPicturePath() . uniqid() . '_' . $profile->getClientOriginalName();
-        Storage::disk('azure')->put(
-            $pathProfile,
-            file_get_contents($profile)
-        );
+        $pathKtp = $storage->upload($path->userKtpPath(), $request->file('ktp'));
 
         $user = User::query()->create([
             'username'      =>  $validated['username'],
@@ -88,7 +81,7 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['Email or password is invalid'],
             ]);
         }
 

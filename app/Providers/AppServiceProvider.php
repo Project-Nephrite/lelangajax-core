@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(StoragePathManager::class, function () {
-            return new StoragePathManager('uploads');
+            return new StoragePathManager('content');
         });
     }
 

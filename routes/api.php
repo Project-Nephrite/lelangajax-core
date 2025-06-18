@@ -4,6 +4,8 @@ use App\Http\Controllers\AuctionSchemaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\UserController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,15 +25,22 @@ Route::prefix('auth')->group(function () {
     });
 });
 
+Route::prefix("user")->group(function () {
+    Route::get("/detail", [UserController::class, "detail"]);
+});
+
 
 Route::prefix('category')->group(function () {
     Route::get('/', [CategoryController::class, 'get']);
     Route::post('/create', [CategoryController::class, 'create']);
+    Route::post('/update', [CategoryController::class, 'update']);
+    Route::delete('/delete', [CategoryController::class, 'delete']);
 });
 
 
 Route::prefix('listing')->group(function () {
 
+    Route::get("/detail", [ListingController::class, "detail"]);
     Route::middleware("auth:sanctum")->group(function () {
         Route::post('create', [ListingController::class, "create"]);
         Route::get('myLists', [ListingController::class, "myLists"]);

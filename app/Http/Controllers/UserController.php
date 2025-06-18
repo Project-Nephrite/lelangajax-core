@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
@@ -24,5 +25,12 @@ class UserController extends Controller
         $user = $request->user();
 
         return new UserResource($user);
+    }
+
+
+    public function detail(Request $request)
+    {
+        $param = $request->query('id');
+        return new UserResource(User::query()->findOrFail($param));
     }
 }

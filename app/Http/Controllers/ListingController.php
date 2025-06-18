@@ -23,37 +23,48 @@ class ListingController extends Controller
      */
     public function create(ListingPostRequest $request, StorageService $upload)
     {
-        $new = new Listing($request->all());
-        $new->value_current = $request->value_base;
-        $new->status = ListingStatusEnum::Open->value;
-        $new->seller_id = $request->user()->id;
-
 
         $urls = [];
         $this->pathManager = new StoragePathManager('uploads');
-
-        if ($new['bucket_url']) {
-            foreach ($new->bucket_url as $url) {
-
-                Storage::disk('azure')->delete($url);
-            }
-        }
-        $files = $request->file('images');
-        foreach ($files as $file) {
+        foreach ($request->file("images") as $file) {
             $filepath = $this->pathManager->listingPath();
             $urls[] = $upload->upload($filepath, $file);
-        };
-
-        $new->bucket_url = $urls;
+        }
 
 
-        $new->save();
+
+        $new = Listing::query()->create([
+            "name"      =>  $request->name,
+            "description"   => $request->description,
+            "status"        =>  ListingStatusEnum::Open->value,
+            "category_id"   => $request->category_id,
+            "schema_id"     =>  $request->schema_id,
+            "seller_id"       =>  $request->user()->id,
+
+            "value_base"    => $request->value_base,
+
+            "value_current"    => $request->value_base,
+            "bucket_url"        =>  $urls
+        ]);
 
         return new JsonResponse([
             "message" => "Creation success",
             "data" => $new
 
         ]);
+    }
+
+    public function advanceSearch(Request $request)
+    {
+        $query = Listing::query();
+
+        foreach ($request->query() as $key => $value) {
+            if (!is_null($value)) {
+                $query->where($key, 'like', '%' . $value . '%');
+            }
+        }
+
+        return ListingResource::collection($query->get()->all());
     }
 
     /**

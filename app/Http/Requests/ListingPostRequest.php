@@ -27,7 +27,7 @@ class ListingPostRequest extends FormRequest
             "value_base"    =>  "numeric|gt:5000",
             "status"        =>  "string",
             "category_id"   =>  "string|exists:categories,id",
-            "schema_id"     =>  "required|string|exists:auction_schemes,id",
+            "schema_id"     =>  "string|exists:auction_schemes,id",
             "images"        =>  "array",
             "images.*"      =>  "file"
         ];
