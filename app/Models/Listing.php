@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\AzureFileUrlsCast;
+use App\Casts\AzureUrlArrayCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,7 +23,12 @@ class Listing extends Model
         "status",
         "bucket_url",
         "category_id",
-        "user_id"
+        "seller_id",
+        "schema_id"
+    ];
+
+    protected $casts = [
+        "bucket_url" => AzureFileUrlsCast::class
     ];
 
     /**

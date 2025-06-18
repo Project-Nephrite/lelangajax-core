@@ -71,11 +71,11 @@ return new class extends Migration
             $table->integer("value_current");
             $table->string("status");
 
+            $table->json('bucket_url');
+
             $table->unsignedBigInteger("schema_id");
             $table->unsignedBigInteger("seller_id");
             $table->unsignedBigInteger("category_id")->nullable();
-
-            $table->string("bucket_url");
 
             $table->foreign("schema_id")->references("id")
                 ->on("auction_schemes")
