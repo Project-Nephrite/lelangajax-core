@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuctionSchemaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
@@ -53,4 +54,15 @@ Route::prefix('listing')->group(function () {
 Route::prefix('auction-schema')->group(function () {
     Route::get('/', [AuctionSchemaController::class, 'get']);
     Route::post('/create', [AuctionSchemaController::class, 'create']);
+});
+
+Route::prefix('bid')->group(function () {
+
+    Route::get("/fetch", [BidController::class, "getBids"]);
+    Route::post("/register", [BidController::class, "createBid"]);
+
+    Route::middleware("auth:sanctum")->group(function () {
+
+        Route::get('/myBids', [BidController::class, "myBids"]);
+    });
 });

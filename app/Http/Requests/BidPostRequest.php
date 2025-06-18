@@ -11,7 +11,7 @@ class BidPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class BidPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "value" => "numeric",
+            "listing_id" => "string",
+            "user_id" => "string"
+
+
         ];
     }
 }

@@ -9,8 +9,9 @@ class Bid extends Model
 {
     protected $table = "bids";
     protected $fillable = [
-        "timestamp",
-        "index"
+        "value",
+        "user_id",
+        "listing_id"
     ];
 
     /**
